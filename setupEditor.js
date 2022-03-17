@@ -10,13 +10,13 @@ import {
 from "@codemirror/commands";
 
 import {
-    json
-} from "@codemirror/lang-json";
-
-import {
     EditorView,
     keymap
 } from "@codemirror/view";
+
+import {
+    json
+} from "@codemirror/lang-json";
 
 export default function setupEditor() {
     const jsonRequestBody = document.querySelector("[data-json-request-body]");
@@ -24,7 +24,7 @@ export default function setupEditor() {
 
     const basicExtensions = [
         basicSetup, keymap.of([indentWithTab]),
-        json,
+        json(),
         EditorState.tabSize.of(2)
     ];
 

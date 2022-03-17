@@ -52,16 +52,27 @@ const {
 
 form.addEventListener('submit', e => {
     e.preventDefault();
+
+    let data;
+    try {
+        data = JSON.parse(requestEditor.state.doc.toString() || null);
+    } catch (e) {
+
+        clearTimeout("JSON data is malformed");
+        return;
+    }
+
+
     axios({
         url: document.querySelector("[data-url]").value,
         method: document.querySelector("[data-method]").value,
         params: kvpToObj(queryParamsContainer),
-        headers: kvpToObj(requestHeadersContainer)
-
+        headers: kvpToObj(requestHeadersContainer),
+        data,
     }).catch(e => e).then(response => {
         document.querySelector("[data-response-section]").classList.remove("d-none");
         updateResponseDetails(response);
-        updateResponseEditor(reponse.data);
+        updateResponseEditor(response.data);
         updateResponseHeaders(response.headers);
         console.log(response);
     });
